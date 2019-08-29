@@ -17,7 +17,7 @@ import java.util.TreeSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class VetControllerTest {
+class VetControllerTest implements ControllerTests{
 
     VetController vetController;
     VetService vetService;
