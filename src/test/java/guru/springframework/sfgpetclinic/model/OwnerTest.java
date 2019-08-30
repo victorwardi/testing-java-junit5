@@ -1,12 +1,12 @@
 package guru.springframework.sfgpetclinic.model;
 
+import guru.springframework.sfgpetclinic.providers.OwnersProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.*;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,8 +55,30 @@ class OwnerTest implements ModelTests{
 
     @DisplayName("Parameterized CSV Test")
     @ParameterizedTest(name = "{displayName} - {arguments}")
-    @CsvFileSource(resources = "/owners.csv", numLinesToSkip = 0, delimiter = ';')
+    @CsvFileSource(resources = "/owners.csv", numLinesToSkip = 1, delimiter = ';')
     void testParameterizedCSVFileTest(String name, int age, String city) {
+        System.out.println(name + " - "  + age + " - > " + city);
+    }
+
+    @DisplayName("Method Source")
+    @ParameterizedTest(name = "{displayName} - {arguments}")
+    @MethodSource("getArgs")
+    void testParameterizedUsingMethodProvider(String name, int age, String city) {
+        System.out.println(name + " - "  + age + " - > " + city);
+    }
+
+    static Stream<Arguments> getArgs(){
+        return Stream.of(
+                Arguments.of("Victor", 34, "Saquarema"),
+                Arguments.of("Ursula", 35, "Sao Pedro da Aldeia"),
+                Arguments.of("Belinha", 6, "Niteroi")
+                );
+    }
+
+    @DisplayName("Args Source")
+    @ParameterizedTest(name = "{displayName} - {arguments}")
+    @ArgumentsSource(OwnersProvider.class)
+    void testParameterizedUsingArgProvider(String name, int age, String city) {
         System.out.println(name + " - "  + age + " - > " + city);
     }
 }
