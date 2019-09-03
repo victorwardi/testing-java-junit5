@@ -45,7 +45,7 @@ class IndexControllerTest implements ControllerTests{
     @EnabledOnJre(JRE.JAVA_11)
     void testTimeOut() {
         assertTimeout(Duration.ofMillis(100), () ->{
-            Thread.sleep(2000);
+            Thread.sleep(10);
             System.out.println("I got Here");
         });
     }
@@ -53,13 +53,13 @@ class IndexControllerTest implements ControllerTests{
     @Test
     void testTimeOutPreempt() {
         assertTimeoutPreemptively(Duration.ofMillis(100), () ->{
-            Thread.sleep(2000);
+            Thread.sleep(10);
             System.out.println("I got here in a different Thread");
         });
     }
 
     @Test
     void testAssumptions() {
-        assumeTrue("Victor".equalsIgnoreCase("Victor2"));
+        assumeTrue("Victor".equalsIgnoreCase("Victor"));
     }
 }
